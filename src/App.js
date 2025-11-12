@@ -2,7 +2,10 @@ const App = () => {
   return React.createElement(
     "div",
     {},
-    React.createElement("h1", {}, "Hello, React!")
+    React.createElement("h1", {}, "Hello, React!"),
+    React.createElement(pizza),
+    React.createElement(pizza),
+    React.createElement(pizza)
   );
 };
 
