@@ -7,11 +7,24 @@ const intl = new Intl.NumberFormat("en-US", {
 })
 
 const Order = () => {
-  //   const pizzaTypes = "Margherita";
-  //   const pizzaSizes = "Medium";
 
-  const [pizzaTypes, setPizzaTypes] = useState("pepperoni");
+  const [pizzaType, setPizzaType] = useState("pepperoni");
   const [pizzaSizes, setPizzaSizes] = useState("Medium");
+  const [pizzaTypes, setPizzaTypes] = useState([]);
+  const [loading, setLoading] = useState(true)
+
+  let price, selectedPizza;
+
+  if(!loading){
+    selectedPizza = pizzaTypes.find((pizza) => pizzaType === pizza.id)
+  }
+
+  async function fetchPizzaTypes(){
+    const pizzaRes = await fetch("api/pizzas");
+    const pizzaJson = pizzaRes.json();
+    setPizzaTypes(pizzaJson);
+    setLoading(true);
+  }
 
   return (
     <div className="order">
@@ -21,9 +34,9 @@ const Order = () => {
           <div>
             <label htmlFor="pizza-type">Pizza Type:</label>
             <select
-              onChange={(e) => setPizzaTypes(e.target.value)}
+              onChange={(e) => setPizzaType(e.target.value)}
               name="pizza-type"
-              value={pizzaTypes}
+              value={pizzaType}
             >
               <option value="pepperoni">pepperoni pizza</option>
               <option value="margherita">margherita pizza</option>
