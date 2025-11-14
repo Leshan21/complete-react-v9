@@ -1,8 +1,12 @@
+import { useState } from "react";
 import Pizza from "./Pizza";
 
 const Order = () => {
-  const pizzaTypes = "Margherita";
-  const pizzaSizes = "Medium";
+  //   const pizzaTypes = "Margherita";
+  //   const pizzaSizes = "Medium";
+
+  const [pizzaTypes, setPizzaTypes] = useState("pepperoni");
+  const [pizzaSizes, setPizzaSizes] = useState("Medium");
 
   return (
     <div className="order">
@@ -11,7 +15,11 @@ const Order = () => {
         <div>
           <div>
             <label htmlFor="pizza-type">Pizza Type:</label>
-            <select name="pizza-type" id="pizza-type">
+            <select
+              onChange={(e) => setPizzaTypes(e.target.value)}
+              name="pizza-type"
+              value={pizzaTypes}
+            >
               <option value="pepperoni">pepperoni pizza</option>
               <option value="margherita">margherita pizza</option>
               <option value="bbq-chicken">bbq chicken pizza</option>
@@ -54,7 +62,11 @@ const Order = () => {
           </div>
           <button type="submit">Add to Cart</button>
           <div className="order-pizza">
-            <Pizza type = "pepperoni" description="another pep pizzaaaa" image = "/public/pizzas/pepperoni.webp"/>
+            <Pizza
+              name="pepperoni"
+              description="another pep pizzaaaa"
+              image="/public/pizzas/pepperoni.webp"
+            />
             <p>$13.99</p>
           </div>
         </div>
