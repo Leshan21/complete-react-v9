@@ -2,29 +2,32 @@ import { useState, useEffect } from "react";
 import Pizza from "./Pizza";
 
 const intl = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-})
+  style: "currency",
+  currency: "USD",
+});
 
 const Order = () => {
-
   const [pizzaType, setPizzaType] = useState("pepperoni");
   const [pizzaSizes, setPizzaSizes] = useState("Medium");
   const [pizzaTypes, setPizzaTypes] = useState([]);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   let price, selectedPizza;
 
-  if(!loading){
-    selectedPizza = pizzaTypes.find((pizza) => pizzaType === pizza.id)
+  if (!loading) {
+    selectedPizza = pizzaTypes.find((pizza) => pizzaType === pizza.id);
   }
 
-  async function fetchPizzaTypes(){
+  async function fetchPizzaTypes() {
     const pizzaRes = await fetch("api/pizzas");
     const pizzaJson = pizzaRes.json();
     setPizzaTypes(pizzaJson);
     setLoading(true);
   }
+
+  useEffect(() => {
+    fetchPizzaTypes();
+  }, []);
 
   return (
     <div className="order">
@@ -38,9 +41,11 @@ const Order = () => {
               name="pizza-type"
               value={pizzaType}
             >
-              <option value="pepperoni">pepperoni pizza</option>
-              <option value="margherita">margherita pizza</option>
-              <option value="bbq-chicken">bbq chicken pizza</option>
+              {pizzaTypes.map((pizza) => {
+                <option key={pizza.id} value={pizza.id}>
+                  {pizza.name}
+                </option>;
+              })}
             </select>
           </div>
           <div>
