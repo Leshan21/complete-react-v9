@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Pizza from "./Pizza";
+
+const intl = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+})
 
 const Order = () => {
   //   const pizzaTypes = "Margherita";
