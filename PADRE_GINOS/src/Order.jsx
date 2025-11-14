@@ -35,6 +35,7 @@ const Order = () => {
                   name="pizza-size"
                   value="Small"
                   id="pizza-s"
+                  onChange={(e) => setPizzaSizes(e.target.value)}
                 />
                 <label htmlFor="pizza-s">Small</label>
               </span>
@@ -45,6 +46,7 @@ const Order = () => {
                   name="pizza-size"
                   value="Medium"
                   id="pizza-m"
+                  onChange={(e) => setPizzaSizes(e.target.value)}
                 />
                 <label htmlFor="pizza-m">Medium</label>
               </span>
@@ -55,6 +57,7 @@ const Order = () => {
                   name="pizza-size"
                   value="Large"
                   id="pizza-l"
+                  onChange={(e) => setPizzaSizes(e.target.value)}
                 />
                 <label htmlFor="pizza-l">Large</label>
               </span>
