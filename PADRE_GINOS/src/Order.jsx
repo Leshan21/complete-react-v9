@@ -16,13 +16,18 @@ const Order = () => {
 
   if (!loading) {
     selectedPizza = pizzaTypes.find((pizza) => pizzaType === pizza.id);
+    price = intl.format(
+    selectedPizza.sizes ? selectedPizza.sizes[pizzaSizes] : ""
+  );
   }
 
+  
+
   async function fetchPizzaTypes() {
-    const pizzaRes = await fetch("api/pizzas");
-    const pizzaJson = pizzaRes.json();
+    const pizzaRes = await fetch("/api/pizzas");
+    const pizzaJson = await pizzaRes.json();
     setPizzaTypes(pizzaJson);
-    setLoading(true);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -41,11 +46,11 @@ const Order = () => {
               name="pizza-type"
               value={pizzaType}
             >
-              {pizzaTypes.map((pizza) => {
+              {pizzaTypes.map((pizza) => (
                 <option key={pizza.id} value={pizza.id}>
                   {pizza.name}
-                </option>;
-              })}
+                </option>
+              ))}
             </select>
           </div>
           <div>
@@ -53,10 +58,10 @@ const Order = () => {
             <div>
               <span>
                 <input
-                  checked={pizzaSizes === "Small"}
+                  checked={pizzaSizes === "S"}
                   type="radio"
                   name="pizza-size"
-                  value="Small"
+                  value="S"
                   id="pizza-s"
                   onChange={(e) => setPizzaSizes(e.target.value)}
                 />
@@ -64,10 +69,10 @@ const Order = () => {
               </span>
               <span>
                 <input
-                  checked={pizzaSizes === "Medium"}
+                  checked={pizzaSizes === "M"}
                   type="radio"
                   name="pizza-size"
-                  value="Medium"
+                  value="M"
                   id="pizza-m"
                   onChange={(e) => setPizzaSizes(e.target.value)}
                 />
@@ -75,10 +80,10 @@ const Order = () => {
               </span>
               <span>
                 <input
-                  checked={pizzaSizes === "Large"}
+                  checked={pizzaSizes === "L"}
                   type="radio"
                   name="pizza-size"
-                  value="Large"
+                  value="L"
                   id="pizza-l"
                   onChange={(e) => setPizzaSizes(e.target.value)}
                 />
@@ -88,12 +93,16 @@ const Order = () => {
           </div>
           <button type="submit">Add to Cart</button>
           <div className="order-pizza">
-            <Pizza
-              name="pepperoni"
-              description="another pep pizzaaaa"
-              image="/public/pizzas/pepperoni.webp"
-            />
-            <p>$13.99</p>
+            {selectedPizza ? (
+              <Pizza
+                name={selectedPizza.name}
+                description={selectedPizza.description}
+                image={selectedPizza.image}
+              />
+            ) : (
+              <p>No pizza selected.</p>
+            )}
+            <p>{price}</p>
           </div>
         </div>
       </form>
